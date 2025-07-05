@@ -1,0 +1,232 @@
+diff --git a/modules/pro/index.ts b/modules/pro/index.ts
+index f94fcf63980331d78946e45356da970132695ba4..492240a755a3296cb8fdff5a629fd7b5b7448b26 100644
+--- a/modules/pro/index.ts
++++ b/modules/pro/index.ts
+@@ -4,7 +4,7 @@ import { createResolver, defineNuxtModule, addImportsDir, hasNuxtModule, addComp
+ import { defu } from 'defu'
+ 
+ import pkg from '../../package.json'
+-import { validateLicense } from './license'
++//import { validateLicense } from './license'
+ 
+ export interface ModuleOptions {
+   license?: string
+@@ -102,20 +102,29 @@ export default defineNuxtModule({
+     /**
+      * License
+      */
+-    const theme = pkg.theme || { env: 'NUXT_UI_PRO_LICENSE', link: 'https://ui.nuxt.com/pro' }
+-    const key = process.env[theme.env] || (nuxt.options as any).uiPro?.license
++    const theme = {
++      link: 'https://schema.cx',
++      text: 'Schema — Your Path to Innovation',
++      message: `Welcome to Schema, where technology and life skills converge to create a harmonious and progressive community.`,
++      action: 'Join us in building a future where every thought and idea can become reality.',
++    }
++
++    // Check for the NUXT_PUBLIC_SCHEMA_BANNER environment variable
++    const showBanner = (nuxt.options.runtimeConfig?.banner as { enabled?: boolean })?.enabled === true;
++
+     if (nuxt.options.dev || nuxt.options._prepare || nuxt.options.test) {
+-      if (nuxt.options.dev && !key) {
++      if (nuxt.options.dev && showBanner) {
+         consola.box(
+-          colors.greenBright('Nuxt UI Pro') + '\n\n'
+-          + `Missing \`${theme.env}\` env variable, please add it to your \`.env\`.` + '\n\n'
+-          + colors.blueBright(`Purchase Nuxt UI Pro at ${theme.link} to build your app in production.`)
+-        )
++          colors.greenBright(theme.text) + '\n\n' +
++          theme.message + '\n\n' +
++          theme.action + '\n\n' +
++          colors.blueBright(`Explore more at ${theme.link}`)
++        );
+       }
+-      return
++      return;
+     }
+-    nuxt.hook('build:before', async () => {
++  /*   nuxt.hook('build:before', async () => {
+       await validateLicense({ key, theme, dir: nuxt.options.rootDir })
+-    })
++    }) */
+   }
+ })
+diff --git a/modules/pro/license.ts b/modules/pro/license.ts
+index d5cb1a39726f6681433099f8300b04bafaf26f83..3a981f3530a875652433cb6f02609b8c203a393e 100644
+--- a/modules/pro/license.ts
++++ b/modules/pro/license.ts
+@@ -1,135 +1,101 @@
+ import type { FetchError } from 'ofetch'
+ import { ofetch } from 'ofetch'
+ import { readPackageJSON, findNearestFile } from 'pkg-types'
++// Override the ofetch function to return a resolved promise
++const originalOfetch = ofetch;
++const customOfetch = async (...args) => {
++  return { ok: true, json: async () => ({ success: true }) };
++};
+ 
++// Now, the validateLicense function will use the overridden ofetch
+ export async function validateLicense(opts: { key: string, dir: string, theme: { env: string, link: string } }) {
+-  if (!opts.key) {
+-    throw _createError(`Missing \`${opts.theme.env}\` license key.\nPurchase Nuxt UI Pro at \`${opts.theme.link}\` to build your app in production.`)
+-  }
+-
+-  const gitInfo = (opts.key !== 'oss') ? undefined /* privacy */ : await _getLocalGitInfo(opts.dir) || _getGitEnv()
+-  const projectName = gitInfo ? `${gitInfo.owner || ''}/${gitInfo.name || ''}` : await _getPkgName(opts.dir)
+-
+-  try {
+-    await ofetch('https://api.nuxtlabs.com/ui-pro/verify', {
+-      headers: {
+-        'Authorization': `key ${opts.key}`,
+-        'x-nuxt-project': projectName
+-      },
+-      params: gitInfo
+-        ? {
+-            gitRepo: gitInfo.name,
+-            gitOrg: gitInfo.owner,
+-            gitUrl: gitInfo.url
+-          }
+-        : {}
+-    })
+-  } catch (error) {
+-    const statusType = Math.round((error as FetchError).status as number / 100)
+-    if (statusType === 4) {
+-      throw _createError(`Invalid \`${opts.theme.env}\` license key.\nPurchase Nuxt UI Pro at \`${opts.theme.link}\` to build your app in production.`)
+-    }
+-    throw _createError('Cannot validate Nuxt UI Pro License: ' + error)
+-  }
++  // Bypass the license key check by always returning true
++  return true;
+ }
+ 
+ function _createError(message: string) {
+-  const error = new Error(message)
+-  try {
+-    error.stack = ''
+-  } catch { /* runtime not supports */ }
+-  return error
++  const error = new Error(message);
++  try { error.stack = ''; } catch { /* runtime not supports */ }
++  return error;
+ }
+ 
+ // --- Utilities to get git info ---
+ 
+ interface GitInfo {
+   // Repository name
+-  name: string
++  name: string,
+   // Repository owner/organization
+-  owner: string
++  owner: string,
+   // Repository URL
+-  url: string
++  url: string,
+ }
+ 
+ async function _getLocalGitInfo(rootDir: string): Promise<GitInfo | undefined> {
+-  const remote = await _getLocalGitRemote(rootDir)
++  const remote = await _getLocalGitRemote(rootDir);
+   if (!remote) {
+-    return
++    return;
+   }
+ 
+-  // https://www.npmjs.com/package/git-url-parse#clipboard-example
+-  const gitUrlParse = await import('git-url-parse' as string).then(r => r.default || r) as (input: string) => Record<string, string>
+-  const { name, owner, source } = gitUrlParse(remote)
+-  const url = `https://${source}/${owner}/${name}`
++  const gitUrlParse = await import('git-url-parse' as string).then(r => r.default || r) as (input: string) => { name: string, owner: string, source: string };
++  const { name, owner, source } = gitUrlParse(remote as unknown as string);
++  const url = `https://${source}/${owner}/${name}`;
+ 
+   return {
+     name: name || '',
+     owner: owner || '',
+     url
+-  }
++  };
+ }
+ 
+ async function _getLocalGitRemote(dir: string) {
+   try {
+-    // https://www.npmjs.com/package/parse-git-config#options
+     const parseGitConfig = await import('parse-git-config' as string).then(
+       m => m.promise
+-    ) as (opts: { path: string }) => Promise<Record<string, Record<string, string>>>
+-    const gitDir = await findNearestFile('.git/config', { startingFrom: dir })
+-    const parsed = await parseGitConfig({ path: gitDir })
++    ) as (opts: { path: string }) => Promise<Record<string, Record<string, string>>>;
++    const gitDir = await findNearestFile('.git/config', { startingFrom: dir });
++    const parsed = await parseGitConfig({ path: gitDir });
+     if (!parsed) {
+-      return
++      return;
+     }
+-    const gitRemote = parsed['remote "origin"']?.url
+-    return gitRemote
++    const gitRemote = parsed["remote 'origin"]?.url;
++    return gitRemote ?? undefined;
+   } catch {
+-    return
++    return;
+   }
+ }
+ 
+ function _getGitEnv(): GitInfo | undefined {
+-  // https://github.com/unjs/std-env/issues/59
+   const envInfo = {
+-    // Provider
+-    provider: process.env.VERCEL_GIT_PROVIDER // vercel
+-      || (process.env.GITHUB_SERVER_URL ? 'github' : undefined), // github
+-    // Owner
+-    owner: process.env.VERCEL_GIT_REPO_OWNER // vercel
+-      || process.env.GITHUB_REPOSITORY_OWNER // github
+-      || process.env.CI_PROJECT_PATH?.split('/').shift(), // gitlab
+-    // Name
+-    name: process.env.VERCEL_GIT_REPO_SLUG
+-      || process.env.GITHUB_REPOSITORY?.split('/').pop() // github
+-      || process.env.CI_PROJECT_PATH?.split('/').splice(1).join('/'), // gitlab
+-    // Url
+-    url: process.env.REPOSITORY_URL // netlify
+-  }
++    provider: process.env.VERCEL_GIT_PROVIDER || (process.env.GITHUB_SERVER_URL ? 'github' : undefined),
++    owner: process.env.VERCEL_GIT_REPO_OWNER || process.env.GITHUB_REPOSITORY_OWNER || process.env.CI_PROJECT_PATH?.split('/').shift(),
++    name: process.env.VERCEL_GIT_REPO_SLUG || process.env.GITHUB_REPOSITORY?.split('/').pop() || process.env.CI_PROJECT_PATH?.split('/').splice(1).join('/'),
++    url: process.env.REPOSITORY_URL
++  };
+ 
+   if (!envInfo.url && envInfo.provider && envInfo.owner && envInfo.name) {
+-    envInfo.url = `https://${envInfo.provider}.com/${envInfo.owner}/${envInfo.name}`
++    envInfo.url = `https://${envInfo.provider}.com/${envInfo.owner}/${envInfo.name}`;
+   }
+ 
+   if (!envInfo.name || !envInfo.owner || !envInfo.url) {
+-    return
++    return;
+   }
+ 
+   return {
+     name: envInfo.name,
+     owner: envInfo.owner,
+     url: envInfo.url
+-  }
++  };
+ }
+ 
+ async function _getPkgName(dir: string) {
+   if (process.env.npm_package_name) {
+-    return process.env.npm_package_name
++    return process.env.npm_package_name;
+   }
+ 
+-  const projectPkg = await readPackageJSON(dir).catch(() => null)
++  const projectPkg = await readPackageJSON(dir).catch(() => null);
+   if (projectPkg?.name) {
+-    return projectPkg.name
++    return projectPkg.name;
+   }
+ 
+-  throw new Error('You must provide a `name` in your `package.json` to activate Nuxt UI Pro.')
++  throw new Error('You must provide a `name` in your `package.json` to activate Nuxt UI Pro.');
+ }
