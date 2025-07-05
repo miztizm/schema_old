@@ -1,0 +1,5 @@
+navigation: false
+hero:
+  title: "landing.title"
+  intro: "landing.intro"
+  cta_text: "landing.cta_text"

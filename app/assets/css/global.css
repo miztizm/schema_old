@@ -1,0 +1,96 @@
+/* @import "tailwindcss"; */
+/* @import "@nuxt/ui"; */
+
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+body.shake {
+  animation: shake 0.5s;
+  animation-iteration-count: 1;
+}
+
+.glass {
+  /* CSS for Glass UI, play with it for better or more suitable results */
+  backdrop-filter: blur(25px) saturate(180%);
+  -webkit-backdrop-filter: blur(25px) saturate(180%);
+}
+
+/* Global Styles */
+
+/* Text Logo */
+.text-logo {
+  font-family: 'Agency FB', sans-serif;
+  font-size: 1.2rem;
+}
+
+/* .dark body {
+  background: #080b0f !important;
+} */
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 5px !important;
+  height: 5px !important;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #212121;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #454545;
+  border-radius: 10px;
+}
+
+
+/* Animations */
+@keyframes blink {
+  0%, 100% { border-color: transparent; }
+  50% { border-color: red; }
+}
+
+.blink-animation {
+  animation: blink 1s ease-in-out 2;
+}
+
+/* Fade Transitions */
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+
+.fade-enter-to, .fade-leave-from {
+  opacity: 1;
+}
+/* @font-face {
+  font-family: 'Product Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), url(https://fonts.gstatic.com/s/productsans/v5/HYvgU2fE2nRJvZ5JFAumwegdm0LZdjqr5-oayXSOefg.woff2) format('woff2');
+}
+body {
+  font-family: 'Product Sans', sans-serif !important;
+} */
+@media (max-width: 767px) {
+  .no-backdrop {
+    backdrop-filter: none !important;
+  }
+}

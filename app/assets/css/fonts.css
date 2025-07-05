@@ -1,0 +1,156 @@
+/* GeistSans font-face declarations */
+@font-face {
+  font-family: 'GeistSans';
+  font-weight: 100;
+  font-style: normal;
+  src: url('/fonts/geist-sans/Geist-Thin.woff2') format('woff2'),
+       url('/fonts/geist-sans/Geist-Thin.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'GeistSans';
+  font-weight: 200;
+  font-style: normal;
+  src: url('/fonts/geist-sans/Geist-UltraLight.woff2') format('woff2'),
+       url('/fonts/geist-sans/Geist-UltraLight.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'GeistSans';
+  font-weight: 300;
+  font-style: normal;
+  src: url('/fonts/geist-sans/Geist-Light.woff2') format('woff2'),
+       url('/fonts/geist-sans/Geist-Light.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'GeistSans';
+  font-weight: 400;
+  font-style: normal;
+  src: url('/fonts/geist-sans/Geist-Regular.woff2') format('woff2'),
+       url('/fonts/geist-sans/Geist-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'GeistSans';
+  font-weight: 500;
+  font-style: normal;
+  src: url('/fonts/geist-sans/Geist-Medium.woff2') format('woff2'),
+       url('/fonts/geist-sans/Geist-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'GeistSans';
+  font-weight: 600;
+  font-style: normal;
+  src: url('/fonts/geist-sans/Geist-SemiBold.woff2') format('woff2'),
+       url('/fonts/geist-sans/Geist-SemiBold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'GeistSans';
+  font-weight: 700;
+  font-style: normal;
+  src: url('/fonts/geist-sans/Geist-Bold.woff2') format('woff2'),
+       url('/fonts/geist-sans/Geist-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'GeistSans';
+  font-weight: 800;
+  font-style: normal;
+  src: url('/fonts/geist-sans/Geist-Black.woff2') format('woff2'),
+       url('/fonts/geist-sans/Geist-Black.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'GeistSans';
+  font-weight: 900;
+  font-style: normal;
+  src: url('/fonts/geist-sans/Geist-UltraBlack.woff2') format('woff2'),
+       url('/fonts/geist-sans/Geist-UltraBlack.ttf') format('truetype');
+}
+
+/* GeistMono font-face declarations */
+@font-face {
+  font-family: 'GeistMono';
+  font-weight: 100;
+  font-style: normal;
+  src: url('/fonts/geist-mono/GeistMono-Thin.woff2') format('woff2'),
+       url('/fonts/geist-mono/GeistMono-Thin.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'GeistMono';
+  font-weight: 200;
+  font-style: normal;
+  src: url('/fonts/geist-mono/GeistMono-UltraLight.woff2') format('woff2'),
+       url('/fonts/geist-mono/GeistMono-UltraLight.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'GeistMono';
+  font-weight: 300;
+  font-style: normal;
+  src: url('/fonts/geist-mono/GeistMono-Light.woff2') format('woff2'),
+       url('/fonts/geist-mono/GeistMono-Light.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'GeistMono';
+  font-weight: 400;
+  font-style: normal;
+  src: url('/fonts/geist-mono/GeistMono-Regular.woff2') format('woff2'),
+       url('/fonts/geist-mono/GeistMono-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'GeistMono';
+  font-weight: 500;
+  font-style: normal;
+  src: url('/fonts/geist-mono/GeistMono-Medium.woff2') format('woff2'),
+       url('/fonts/geist-mono/GeistMono-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'GeistMono';
+  font-weight: 600;
+  font-style: normal;
+  src: url('/fonts/geist-mono/GeistMono-SemiBold.woff2') format('woff2'),
+       url('/fonts/geist-mono/GeistMono-SemiBold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'GeistMono';
+  font-weight: 700;
+  font-style: normal;
+  src: url('/fonts/geist-mono/GeistMono-Bold.woff2') format('woff2'),
+       url('/fonts/geist-mono/GeistMono-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'GeistMono';
+  font-weight: 800;
+  font-style: normal;
+  src: url('/fonts/geist-mono/GeistMono-Black.woff2') format('woff2'),
+       url('/fonts/geist-mono/GeistMono-Black.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'GeistMono';
+  font-weight: 900;
+  font-style: normal;
+  src: url('/fonts/geist-mono/GeistMono-UltraBlack.woff2') format('woff2'),
+       url('/fonts/geist-mono/GeistMono-UltraBlack.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'AgencyFB';
+  src: url('/assets/fonts/AgencyFB/AgencyFBCyrillic.woff2') format('woff2'),
+       url('/assets/fonts/AgencyFB/AgencyFBCyrillic.woff') format('woff'),
+       url('/assets/fonts/AgencyFB/AgencyFBCyrillic.ttf') format('truetype'),
+       url('/assets/fonts/AgencyFB/AgencyFBCyrillic.eot') format('embedded-opentype'),
+       url('/assets/fonts/AgencyFB/AgencyFBCyrillic.svg#AgencyFB') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
