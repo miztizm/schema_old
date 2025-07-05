@@ -1,0 +1,3 @@
+Sitemap: https://schema.cx/sitemap.xmchatgptl
+User-agent: *
+Disallow: /cp
